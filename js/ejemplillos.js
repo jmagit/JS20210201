@@ -64,21 +64,20 @@ console.log(o);
 
 function MiClase(elId, elNombre) {
 	let vm = this;
-  this.id = elId;
-  this.nombre = elNombre;
-  console.log(this);
-  this.muestraId = function() {
+  vm.id = elId;
+  vm.nombre = elNombre;
+  vm.muestraId = function() {
   	alert("El ID del objeto es " + vm.id);
 	}
 }
 function Otra() {
-	let vm = this;
   this.id = "otro valor";
   this.nombre = "en el nombre";
 }
 // MiClase.prototype.ponNombre = function(nom) {
 //   this.nombre=nom.toUpperCase();
 // }
+
 let padre = {
   ponNombre : function(nom) {
     this.nombre=nom.toUpperCase();
@@ -87,15 +86,19 @@ let padre = {
     return this.id + " " + this.nombre;
   }
 }
-
 MiClase.prototype = padre;
 Otra.prototype = padre;
 let uno = new MiClase(1, "uno");
 let dos = new MiClase(2, "dos");
 let tres = new Otra();
+uno.muestraId.call(tres);
 
 uno.ponNombre("hola"); dos.ponNombre("mundo");
 tres.ponNombre("otra funcion");
+console.log(uno.resumen(), dos.resumen(), tres.resumen());
+padre.resumen = function() {
+  return this.nombre + ", " + this.id;
+}
 console.log(uno.resumen(), dos.resumen(), tres.resumen());
 // console.log(uno.nombre, dos.nombre);
 
