@@ -81,3 +81,14 @@ MiClase.prototype.ponNombre = function(nom) {
 MiClase.bind(o);
 
 let algo =MiClase(1, "dos");
+
+function cotilla(msg) {
+	console.log(msg, this);
+}
+
+cotilla("Global");
+cotilla.call({hola:'mundo'}, "objeto con call");
+cotilla.apply({hola:'mundo'}, ["objeto con apply"]);
+cotilla = cotilla.bind({hola:'mundo'});
+cotilla("Bind");
+
