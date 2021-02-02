@@ -5,6 +5,8 @@ function aleatorio(inicio, fin) {
     if (!fin) {
         fin = 100;
     }
+    fin = fin - inicio;
+
     return Math.floor(Math.random() * fin) + inicio;
 }
 
@@ -16,14 +18,15 @@ function JuegoDelNumero() {
     do {
         intentos += 1;
         numeroIntroducido = +prompt('Dame tu numero (' + intentos + ' de 10):');
-        if (numeroBuscado == numeroIntroducido) {
+        if (numeroBuscado === numeroIntroducido) {
             encontrado = true;
+            break;
         } else if (numeroBuscado > numeroIntroducido) {
             alert('Mi número es mayor.');
         } else {
             alert('Mi número es menor.');
         }
-    } while (intentos < 10 && !encontrado);
+    } while (intentos < 10);
     if (encontrado) {
         alert('Bieeen!!! Acertaste.');
     } else {
@@ -35,7 +38,7 @@ function JuegoDelNumero() {
 function dameArray(numeroElementos, valorPorDefecto) {
     var rslt = new Object();
     for (var ind = 0; ind < numeroElementos; ind++) {
-        rslt[ind] = valorPorDefecto;
+        rslt[ind] = valorPorDefecto + (arguments[2] != undefined ? arguments[2] : "");
     }
     return rslt;
 }
