@@ -65,23 +65,48 @@ console.log(o);
 function MiClase(elId, elNombre) {
 	let vm = this;
   this.id = elId;
-  nombre = elNombre;
+  this.nombre = elNombre;
   console.log(this);
   this.muestraId = function() {
   	alert("El ID del objeto es " + vm.id);
 	}
 }
-MiClase.prototype.muestraId = function() {
-  alert("El ID del objeto es " + this.id);
+function Otra() {
+	let vm = this;
+  this.id = "otro valor";
+  this.nombre = "en el nombre";
 }
-MiClase.prototype.ponNombre = function(nom) {
-  this.nombre=nom.toUpperCase();
+// MiClase.prototype.ponNombre = function(nom) {
+//   this.nombre=nom.toUpperCase();
+// }
+let padre = {
+  ponNombre : function(nom) {
+    this.nombre=nom.toUpperCase();
+  },
+  resumen : function() {
+    return this.id + " " + this.nombre;
+  }
 }
 
-MiClase.bind(o);
+MiClase.prototype = padre;
+Otra.prototype = padre;
+let uno = new MiClase(1, "uno");
+let dos = new MiClase(2, "dos");
+let tres = new Otra();
 
-let algo =MiClase(1, "dos");
+uno.ponNombre("hola"); dos.ponNombre("mundo");
+tres.ponNombre("otra funcion");
+console.log(uno.resumen(), dos.resumen(), tres.resumen());
+// console.log(uno.nombre, dos.nombre);
 
+// MiClase.prototype.ponNombre = function(nom) {
+//   this.nombre=nom.toLowerCase();
+// }
+// //uno.muestraId(); dos.muestraId();
+// uno.ponNombre("hola"); dos.ponNombre("mundo");
+// console.log(uno.nombre, dos.nombre);
+
+/*
 function cotilla(msg) {
 	console.log(msg, this);
 }
@@ -91,4 +116,4 @@ cotilla.call({hola:'mundo'}, "objeto con call");
 cotilla.apply({hola:'mundo'}, ["objeto con apply"]);
 cotilla = cotilla.bind({hola:'mundo'});
 cotilla("Bind");
-
+*/
