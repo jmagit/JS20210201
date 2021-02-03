@@ -13,10 +13,23 @@
     <!-- <script src="js/ejemplillos.js"></script> -->
     <script src="js/ejercicios.js"></script>
     <script>
+        function unaQueFalla() {
+            throw new Error("error forzado");
+        }
         // console.log(aleatorio(100, 200));
         // JuegoDelNumero();
         // console.log(dameArray(10, "x"));
-        console.log(damePrimos(20));
+        try {
+            console.log(damePrimos(20));
+            unaQueFalla();
+            console.warn("Aviso");
+            
+        } catch (error) {
+            console.error("ERROR: " + error.message + " Tipo:" + error.name);
+            
+        } finally {
+           console.info("Siempre lo hace");
+        }
     </script>
 </body>
 </html>

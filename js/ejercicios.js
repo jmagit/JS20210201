@@ -36,9 +36,9 @@ function JuegoDelNumero() {
 }
 
 function dameArray(numeroElementos, valorPorDefecto) {
-    var rslt = new Object();
+    var rslt = [];
     for (var ind = 0; ind < numeroElementos; ind++) {
-        rslt[ind] = valorPorDefecto + (arguments[2] != undefined ? arguments[2] : "");
+        rslt[ind] = valorPorDefecto + (arguments.length > 2 ? arguments[2] : "");
     }
     return rslt;
 }
@@ -70,3 +70,4 @@ function damePrimos(num) {
     console.log('Calculos: ' + calculos);
     return rslt;
 }
+
