@@ -71,3 +71,82 @@ function damePrimos(num) {
     return rslt;
 }
 
+function Juego(maxIntentos, valores) {
+    var numeroBuscado;
+    this.intentos;
+    this.encontrado;
+    this.mensaje;
+    this.Inicializa = function () {
+        numeroBuscado = aleatorio(1, valores);
+        this.intentos = 0;
+        this.encontrado = false;
+        this.mensaje = 'Listo para jugar';
+    }
+
+    this.Inicializa();
+
+    this.PruebaCon = function (numeroIntroducido) {
+        if (this.intentos >= maxIntentos)
+            throw new Error("Excedido el numero de intentos");
+        this.intentos += 1;
+        if (numeroBuscado == numeroIntroducido) {
+            this.encontrado = true;
+            this.mensaje = 'Bieeen!!! Acertaste.';
+            return this.mensaje;
+        }
+        if (this.intentos >= maxIntentos) {
+            this.mensaje = 'Upsss! Se acabaron los intentos, el número era el ' + numeroBuscado;
+            return this.mensaje;
+        }
+        if (numeroBuscado > numeroIntroducido) {
+            this.mensaje = 'Mi número es mayor.';
+            return this.mensaje;
+        }
+        this.mensaje = 'Mi número es menor.';
+        return this.mensaje;
+    }
+    this.DameMaxIntentos = function () { return maxIntentos; }
+}
+
+//Juego.prototype.DameMaxIntentos = function() { return maxIntentos; }
+//Juego.prototype.DameIntento = function () { return this.intentos + 1; }
+
+class JuegoConClase {
+    #maxIntentos;
+    #valores;
+    #numeroBuscado;
+    constructor(maxIntentos, valores) {
+        this.#maxIntentos = maxIntentos;
+        this.#valores = valores;
+        this.Inicializa();
+    }
+    Inicializa() {
+        this.#numeroBuscado = aleatorio(1, this.#valores);
+        this.intentos = 0;
+        this.encontrado = false;
+        this.mensaje = 'Listo para jugar';
+    };
+    PruebaCon(numeroIntroducido) {
+        if (this.intentos >= this.#maxIntentos)
+            throw new Error("Excedido el numero de intentos");
+        this.intentos += 1;
+        if (this.#numeroBuscado == numeroIntroducido) {
+            this.encontrado = true;
+            this.mensaje = 'Bieeen!!! Acertaste.';
+            return this.mensaje;
+        }
+        if (this.intentos >= this.#maxIntentos) {
+            this.mensaje = 'Upsss! Se acabaron los intentos, el número era el ' + this.#numeroBuscado;
+            return this.mensaje;
+        }
+        if (this.#numeroBuscado > numeroIntroducido) {
+            this.mensaje = 'Mi número es mayor.';
+            return this.mensaje;
+        }
+        this.mensaje = 'Mi número es menor.';
+        return this.mensaje;
+    };
+    get MaxIntentos() { return this.#maxIntentos; };
+
+    get Intento() { return this.intentos + 1; }
+}
