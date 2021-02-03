@@ -35,10 +35,10 @@ function JuegoDelNumero() {
     return encontrado;
 }
 
-function dameArray(numeroElementos, valorPorDefecto) {
+function dameArray(numeroElementos, valorPorDefecto = "", ...resto) {
     var rslt = [];
     for (var ind = 0; ind < numeroElementos; ind++) {
-        rslt[ind] = valorPorDefecto + (arguments.length > 2 ? arguments[2] : "");
+        rslt[ind] = valorPorDefecto + (resto.length > 0 ? resto[0] : "");
     }
     return rslt;
 }
