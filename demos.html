@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demos del curso</title>
 </head>
+
 <body>
     <h1>Demos del curso</h1>
     <div>
-        <input name="nombre" type="text" value="mundo">
+        <form>
+            <img id="avatar" >
+            <p>
+                <label for="codigo">Codigo:</label>
+                <input id="codigo" name="codigo" type="number" required>
+                <br>
+                <label for="nif">NIF:</label>
+                <input id="nif" name="nif" type="text" pattern="^\d{1,8}[A-Z]$">
+                <br>
+                <label for="nombre">Nombre:</label>
+                <input id="nombre" name="nombre" type="text" required>
+                <br>
+                <label for="apellidos">Apellidos:</label>
+                <input id="apellidos" name="apellidos" type="text" pattern="^[A-Z]*$">
+                <br>
+                <label for="correo">Correo:</label>
+                <input id="correo" name="correo" type="email">
+                <br>
+                <label for="edad">Edad:</label>
+                <input id="edad" name="edad" type="number" min="16" max="67">
+            </p>
+            <p>
+                <input id="btnEnviar" type="submit" value="Enviar">
+                <input id="btnVolver" type="reset" value="Volver">
+            </p>
+        </form>
+        <input name="nombre1" type="number" value="1">
         <button class="meinteresa otra" id="btn1">Hola</button>
         <button class="meinteresa" id="btn2">Adios</button>
         <button id="btnVer">Ver</button>
@@ -22,7 +50,7 @@
     <script>
         let btn1 = document.querySelector("#btn1");
         let btn2 = document.querySelector("#btn2");
-        let txtNombre = document.getElementsByName("nombre")[0];
+        let txtNombre = document.getElementsByName("nombre1")[0];
         function saluda(e) {
             document.getElementById("rslt").textContent += `Hola ${txtNombre.value}`;
             btn1.removeEventListener('click', saluda);
@@ -40,16 +68,62 @@
         }
         btn1.addEventListener('click', saluda);
         btn2.disabled = true;
-        document.querySelector("#btnVer").addEventListener('click', function() {
-            document.querySelectorAll(".meinteresa").forEach(element => {
-                element.hidden = !element.hidden;
-                element.click();
-            });
-        });
-        document.querySelector("div").addEventListener('click', function(e) {
+        // document.querySelector("#btnVer").addEventListener('click', function () {
+        //     document.querySelectorAll(".meinteresa").forEach(element => {
+        //         element.hidden = !element.hidden;
+        //         element.click();
+        //     });
+        // });
+        document.querySelector("div").addEventListener('click', function (e) {
             //document.getElementById("rslt").textContent += "Soy el contenedor";;
             document.getElementById("cotilla").textContent = `X: ${e.clientX} Y: ${e.clientY}`;
         });
+        document.forms[0].addEventListener('submit', function (e) {
+            if(document.forms[0].nif.value === "12345678Z") {
+                document.forms[0].nif.setCustomValidity("");
+            } else {
+                document.forms[0].nif.setCustomValidity("No es un NIF valido");
+                e.preventDefault();
+            }
+            // document.forms[0].submit();
+        });
+
+        // document.querySelector("#btnVer").addEventListener('click', function () {
+        //     fetch("https://reqres.in/api/users/" + txtNombre.value)
+        //     .then(response => response.json())
+        //     .then(body => {
+        //         document.forms[0].codigo.value = body.data.id;
+        //         document.forms[0].nombre.value = body.data.first_name;
+        //         document.forms[0].apellidos.value = body.data.last_name;
+        //         document.forms[0].correo.value = body.data.email;
+        //         document.getElementById("avatar").src = body.data.avatar;
+        //     });
+        // });
+
+        document.querySelector("#btnVer").addEventListener('click', function () {
+            fetch("https://reqres.in/api/users?page=" + txtNombre.value )
+            .then(response => response.json())
+            .then(body => {
+                let cad = "<ul>";
+                body.data.forEach(element => {
+                    cad += `<li>${element.first_name} ${element.last_name} (${element.id})</li>`;
+                });
+                cad += "</ul>";
+                document.getElementById("rslt").innerHTML = cad;
+            });
+        });
+        document.querySelector("#btnVer").addEventListener('click', async function () {
+            let response = await fetch("https://reqres.in/api/users?page=" + txtNombre.value );
+            let body = await response.json();
+            let cad = "<ul>";
+            body.data.forEach(element => {
+                cad += `<li>${element.first_name} ${element.last_name} (${element.id})</li>`;
+            });
+            cad += "</ul>";
+            document.getElementById("rslt").innerHTML = cad;
+         });
+
+
 
 
         /*
@@ -109,13 +183,14 @@
         // //     console.log(damePrimos(20));
         // //     unaQueFalla();
         // //     console.warn("Aviso");
-            
+
         // // } catch (error) {
         // //     console.error("ERROR: " + error.message + " Tipo:" + error.name);
-            
+
         // // } finally {
         // //    console.info("Siempre lo hace");
         // // }
     </script>
 </body>
+
 </html>
