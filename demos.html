@@ -7,12 +7,51 @@
 </head>
 <body>
     <h1>Demos del curso</h1>
-
+    <div>
+        <input name="nombre" type="text" value="mundo">
+        <button class="meinteresa otra" id="btn1">Hola</button>
+        <button class="meinteresa" id="btn2">Adios</button>
+        <button id="btnVer">Ver</button>
+        <p id="rslt"></p>
+        <p id="cotilla"></p>
+    </div>
 
 
     <!-- <script src="js/ejemplillos.js"></script> -->
     <script src="js/ejercicios.js"></script>
     <script>
+        let btn1 = document.querySelector("#btn1");
+        let btn2 = document.querySelector("#btn2");
+        let txtNombre = document.getElementsByName("nombre")[0];
+        function saluda(e) {
+            document.getElementById("rslt").textContent += `Hola ${txtNombre.value}`;
+            btn1.removeEventListener('click', saluda);
+            btn1.disabled = true;
+            btn2.addEventListener('click', despide);
+            btn2.disabled = false;
+            e.stopPropagation();
+        }
+        function despide() {
+            document.getElementById("rslt").innerHTML += `Hola ${txtNombre.value}`;
+            btn2.removeEventListener('click', despide);
+            btn2.disabled = true;
+            btn1.addEventListener('click', saluda);
+            btn1.disabled = false;
+        }
+        btn1.addEventListener('click', saluda);
+        btn2.disabled = true;
+        document.querySelector("#btnVer").addEventListener('click', function() {
+            document.querySelectorAll(".meinteresa").forEach(element => {
+                element.hidden = !element.hidden;
+                element.click();
+            });
+        });
+        document.querySelector("div").addEventListener('click', function(e) {
+            //document.getElementById("rslt").textContent += "Soy el contenedor";;
+            document.getElementById("cotilla").textContent = `X: ${e.clientX} Y: ${e.clientY}`;
+        });
+
+
         /*
         var juego = new Juego(10, 100);
         do {
@@ -36,8 +75,7 @@
                 break;
             juego.Inicializa();
         } while (true);
-        */
-        var juego = new JuegoConClase(10, 100);
+         var juego = new JuegoConClase(10, 100);
         do {
             do {
                 var numeroLeido = prompt(`Dame tu número ${juego.Intento} de ${juego.MaxIntentos}:`);
@@ -59,6 +97,7 @@
                 break;
             juego.Inicializa();
         } while (true);
+       */
 
         // function unaQueFalla() {
         //     throw new Error("error forzado");

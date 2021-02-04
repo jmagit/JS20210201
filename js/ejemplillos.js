@@ -86,6 +86,7 @@ let padre = {
     return this.id + " " + this.nombre;
   }
 }
+
 MiClase.prototype = padre;
 Otra.prototype = padre;
 class ClasePadre{
@@ -123,6 +124,7 @@ let cuatro = new ComoClase(1, "uno");
 // cuatro._edad = -1;
 cuatro.Edad = 18;
 console.log("Clases", cuatro.Edad >= 18, cuatro.EsMayorDeEdad);
+let nuevo = Object.assign(tres, padre )
 
 uno.muestraId.call(tres);
 
